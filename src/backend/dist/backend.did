@@ -1,0 +1,160 @@
+type http_request_result = 
+ record {
+   body: blob;
+   headers: vec http_header;
+   status: nat;
+ };
+type http_header = 
+ record {
+   name: text;
+   value: text;
+ };
+type UserRole = 
+ variant {
+   admin;
+   guest;
+   user;
+ };
+type UserProfile = 
+ record {
+   age: nat;
+   businessInterest: text;
+   careerInterest: text;
+   city: text;
+   createdAt: Timestamp;
+   currentSavings: float64;
+   currentStudy: text;
+   debtAmount: float64;
+   educationLevel: text;
+   familyResponsibility: text;
+   gender: opt text;
+   id: UserId;
+   isPremium: bool;
+   monthlyExpenses: float64;
+   monthlyIncome: float64;
+   name: text;
+   primaryGoal: text;
+   "principal": principal;
+   riskLevel: text;
+   skills: vec text;
+ };
+type UserId = text;
+type TransformationOutput = 
+ record {
+   body: blob;
+   headers: vec http_header;
+   status: nat;
+ };
+type TransformationInput = 
+ record {
+   context: blob;
+   response: http_request_result;
+ };
+type Timestamp = int;
+type StripeSessionStatus = 
+ variant {
+   completed: record {
+                response: text;
+                userPrincipal: opt text;
+              };
+   failed: record {error: text;};
+ };
+type StripeConfiguration = 
+ record {
+   allowedCountries: vec text;
+   secretKey: text;
+ };
+type ShoppingItem = 
+ record {
+   currency: text;
+   priceInCents: nat;
+   productDescription: text;
+   productName: text;
+   quantity: nat;
+ };
+type SavingsPlan = 
+ record {
+   dailyTarget: float64;
+   debtPlan: text;
+   emergencyFundCurrent: float64;
+   emergencyFundTarget: float64;
+   habits: vec text;
+   monthlyTarget: float64;
+   suggestions: vec text;
+   userId: text;
+   weeklyTarget: float64;
+ };
+type PremiumSubscription = 
+ record {
+   currentPeriodEnd: Timestamp;
+   plan: text;
+   status: text;
+   stripeCustomerId: text;
+   userId: text;
+ };
+type Expense = 
+ record {
+   amount: float64;
+   category: text;
+   date: Timestamp;
+   description: text;
+   id: UserId;
+   userId: text;
+ };
+type DailyTask = 
+ record {
+   completed: bool;
+   date: Timestamp;
+   id: UserId;
+   "text": text;
+   userId: text;
+ };
+type AdminStats = 
+ record {
+   popularBusinessIdeas: vec text;
+   popularCareers: vec text;
+   premiumUsers: nat;
+   totalRevenue: float64;
+   totalUsers: nat;
+ };
+type AIReport = 
+ record {
+   budgetBreakdown: vec record {
+                          text;
+                          float64;
+                        };
+   generatedAt: Timestamp;
+   suggestions: vec text;
+   userId: text;
+ };
+service : {
+  _initializeAccessControl: () -> ();
+  addExpense: (expense: Expense) -> ();
+  assignCallerUserRole: (user: principal, role: UserRole) -> ();
+  createCheckoutSession: (items: vec ShoppingItem, successUrl: text,
+   cancelUrl: text) -> (text);
+  createOrUpdateProfile: (profile: UserProfile) -> (UserProfile);
+  deleteExpense: (expenseId: text) -> ();
+  generateSavingsPlan: () -> (SavingsPlan);
+  getAIReport: () -> (opt AIReport) query;
+  getAdminStats: () -> (AdminStats) query;
+  getCallerUserProfile: () -> (opt UserProfile) query;
+  getCallerUserRole: () -> (UserRole) query;
+  getDailyTasks: () -> (vec DailyTask) query;
+  getExpenses: () -> (vec Expense) query;
+  getMySubscription: () -> (opt PremiumSubscription) query;
+  getProfile: () -> (opt UserProfile) query;
+  getSavingsPlan: () -> (opt SavingsPlan) query;
+  getStripeSessionStatus: (sessionId: text) -> (StripeSessionStatus);
+  getUserProfile: (user: principal) -> (opt UserProfile) query;
+  isCallerAdmin: () -> (bool) query;
+  isStripeConfigured: () -> (bool) query;
+  saveCallerUserProfile: (profile: UserProfile) -> ();
+  setStripeConfiguration: (config: StripeConfiguration) -> ();
+  transform: (input: TransformationInput) -> (TransformationOutput) query;
+  updateAIReport: (report: AIReport) -> ();
+  updatePremiumStatus: (userId: text, isPremium: bool) -> ();
+  updateSavingsPlan: (plan: SavingsPlan) -> ();
+  updateTaskCompletion: (taskId: text, completed: bool) -> ();
+  upsertSubscription: (sub: PremiumSubscription) -> ();
+}

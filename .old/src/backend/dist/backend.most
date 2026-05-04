@@ -1,0 +1,138 @@
+// Version: 1.0.0
+type AIReport__1039556446 =
+  {
+    budgetBreakdown : [(Text, Float)];
+    generatedAt : Timestamp__301639476;
+    suggestions : [Text];
+    userId : Text
+  };
+type DailyTask__20961095 =
+  {
+    completed : Bool;
+    date : Timestamp__301639476;
+    id : UserId__158757552;
+    text : Text;
+    userId : Text
+  };
+type Data__791452850<K, V> =
+  {var count : Nat__490723111; kvs : [var ?(K, V)]};
+type Expense__255157979 =
+  {
+    amount : Float;
+    category : Text;
+    date : Timestamp__301639476;
+    description : Text;
+    id : UserId__158757552;
+    userId : Text
+  };
+type Internal__8484328<K, V> =
+  {children : [var ?Node__46230540<K, V>]; data : Data__791452850<K, V>};
+type Leaf__809889148<K, V> = {data : Data__791452850<K, V>};
+type Map__158565046<K, V> = Map__297112838<K, V>;
+type Map__297112838<K, V> =
+  {var root : Node__46230540<K, V>; var size : Nat__490723111};
+type Map__605269027<K, V> = Map__158565046<K, V>;
+type Nat__490723111 = Nat__920180692;
+type Nat__920180692 = Nat;
+type Node__46230540<K, V> =
+  {#internal : Internal__8484328<K, V>; #leaf : Leaf__809889148<K, V>};
+type PremiumSubscription__542812497 =
+  {
+    currentPeriodEnd : Timestamp__301639476;
+    plan : Text;
+    status : Text;
+    stripeCustomerId : Text;
+    userId : Text
+  };
+type SavingsPlan__36630548 =
+  {
+    dailyTarget : Float;
+    debtPlan : Text;
+    emergencyFundCurrent : Float;
+    emergencyFundTarget : Float;
+    habits : [Text];
+    monthlyTarget : Float;
+    suggestions : [Text];
+    userId : Text;
+    weeklyTarget : Float
+  };
+type StripeConfiguration__87721349 =
+  {allowedCountries : [Text]; secretKey : Text};
+type Timestamp__301639476 = Int;
+type UserId__158757552 = Text;
+type UserProfile__1009003526 =
+  {
+    age : Nat;
+    businessInterest : Text;
+    careerInterest : Text;
+    city : Text;
+    createdAt : Timestamp__301639476;
+    currentSavings : Float;
+    currentStudy : Text;
+    debtAmount : Float;
+    educationLevel : Text;
+    familyResponsibility : Text;
+    gender : ?Text;
+    id : UserId__158757552;
+    isPremium : Bool;
+    monthlyExpenses : Float;
+    monthlyIncome : Float;
+    name : Text;
+    primaryGoal : Text;
+    principal : Principal;
+    riskLevel : Text;
+    skills : [Text]
+  };
+type UserRole__1073662873 = {#admin; #guest; #user};
+actor {
+  stable accessControlState :
+    {
+      var adminAssigned : Bool;
+      userRoles : Map__605269027<Principal, UserRole__1073662873>
+    };
+  stable aiReports :
+    {
+      var root : Node__46230540<Text, AIReport__1039556446>;
+      var size : Nat__490723111
+    };
+  stable dailyTasks :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?DailyTask__20961095]];
+      var elementIndex : Nat__490723111
+    };
+  stable expenses :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?Expense__255157979]];
+      var elementIndex : Nat__490723111
+    };
+  stable popularBusinessIdeas :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?Text]];
+      var elementIndex : Nat__490723111
+    };
+  stable popularCareers :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?Text]];
+      var elementIndex : Nat__490723111
+    };
+  stable profiles :
+    {
+      var root : Node__46230540<Principal, UserProfile__1009003526>;
+      var size : Nat__490723111
+    };
+  stable savingsPlans :
+    {
+      var root : Node__46230540<Text, SavingsPlan__36630548>;
+      var size : Nat__490723111
+    };
+  stable var stripeConfig : ?StripeConfiguration__87721349;
+  stable subscriptions :
+    {
+      var root : Node__46230540<Text, PremiumSubscription__542812497>;
+      var size : Nat__490723111
+    }
+};

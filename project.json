@@ -1,0 +1,26 @@
+{
+  "overview": "SaveFuture AI is a premium fintech SaaS app that helps people save money, plan their career, and build a 10-12 year financial growth roadmap. It combines personalized savings plans, career guidance, business idea suggestions, and education roadmaps into one cohesive platform.",
+  "features": [
+    "Personalized savings dashboard with income/expense tracking and saving targets",
+    "AI-powered budget suggestions and expense reduction recommendations",
+    "Career guidance for students after 10th, 12th, and graduation with salary and growth data",
+    "Business idea generator with basic, medium, and advanced level suggestions",
+    "10-12 year visual life plan roadmap with year-by-year milestones",
+    "Education roadmap with stream/course suggestions and expected salary",
+    "Premium subscription plans with Stripe checkout (₹99/mo, ₹799/yr, ₹1999 lifetime)",
+    "Admin dashboard with user stats, revenue, and popular content",
+    "Mobile-first responsive design with bottom navigation"
+  ],
+  "category": "finance-productivity",
+  "tags": [
+    "fintech",
+    "savings",
+    "career-guidance",
+    "budget-planner",
+    "business-ideas",
+    "education",
+    "premium-saas",
+    "financial-planning"
+  ],
+  "last_updated": "2026-05-04T09:03:47.550Z"
+}
