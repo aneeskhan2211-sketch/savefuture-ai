@@ -1,7 +1,8 @@
 export interface UserProfile {
-  name: string;
-  age: number;
-  gender: [] | [string];
+  id: string;
+  principal: { toText: () => string } | string;
+  age: bigint;
+  gender?: string;
   city: string;
   educationLevel: string;
   currentStatus: string;
@@ -15,6 +16,9 @@ export interface UserProfile {
   businessInterest: string;
   riskLevel: string;
   goal: string;
+  isPremium: boolean;
+  createdAt: bigint;
+  name: string;
 }
 
 export interface Expense {

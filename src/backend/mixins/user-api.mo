@@ -48,7 +48,7 @@ mixin (
     let isNew = UserLib.get(profiles, caller) == null;
     let withPrincipal = { profile with principal = caller };
     let saved = UserLib.createOrUpdate(profiles, caller, withPrincipal);
-    if (isNew) { seedInitialTasks(caller.toText(), profile.primaryGoal) };
+    if (isNew) { seedInitialTasks(caller.toText(), profile.goal) };
     saved;
   };
 
@@ -67,7 +67,7 @@ mixin (
     let isNew = UserLib.get(profiles, caller) == null;
     let withPrincipal = { profile with principal = caller; id = caller.toText() };
     ignore UserLib.createOrUpdate(profiles, caller, withPrincipal);
-    if (isNew) { seedInitialTasks(caller.toText(), profile.primaryGoal) };
+    if (isNew) { seedInitialTasks(caller.toText(), profile.goal) };
   };
 
   public query ({ caller }) func getUserProfile(user : Principal) : async ?TypesUser.UserProfile {

@@ -1,4 +1,4 @@
-// Version: 1.0.0
+// Version: 3.0.0
 type AIReport__1039556446 =
   {
     budgetBreakdown : [(Text, Float)];
@@ -28,6 +28,13 @@ type Expense__255157979 =
 type Internal__8484328<K, V> =
   {children : [var ?Node__46230540<K, V>]; data : Data__791452850<K, V>};
 type Leaf__809889148<K, V> = {data : Data__791452850<K, V>};
+type List__415060402<T> = List__790383201<T>;
+type List__790383201<T> =
+  {
+    var blockIndex : Nat__490723111;
+    var blocks : [var [var ?T]];
+    var elementIndex : Nat__490723111
+  };
 type Map__158565046<K, V> = Map__297112838<K, V>;
 type Map__297112838<K, V> =
   {var root : Node__46230540<K, V>; var size : Nat__490723111};
@@ -36,6 +43,29 @@ type Nat__490723111 = Nat__920180692;
 type Nat__920180692 = Nat;
 type Node__46230540<K, V> =
   {#internal : Internal__8484328<K, V>; #leaf : Leaf__809889148<K, V>};
+type OldUserProfile__416069324 =
+  {
+    age : Nat;
+    businessInterest : Text;
+    careerInterest : Text;
+    city : Text;
+    createdAt : Int;
+    currentSavings : Int;
+    currentStatus : Text;
+    debtAmount : Int;
+    educationLevel : Text;
+    familyResponsibility : Text;
+    gender : ?Text;
+    goal : Text;
+    id : Text;
+    isPremium : Bool;
+    monthlyExpenses : Int;
+    monthlyIncome : Int;
+    name : Text;
+    principal : Principal;
+    riskLevel : Text;
+    skills : Text
+  };
 type PremiumSubscription__542812497 =
   {
     currentPeriodEnd : Timestamp__301639476;
@@ -67,24 +97,39 @@ type UserProfile__1009003526 =
     careerInterest : Text;
     city : Text;
     createdAt : Timestamp__301639476;
-    currentSavings : Float;
-    currentStudy : Text;
-    debtAmount : Float;
+    currentSavings : Int;
+    currentStatus : Text;
+    debtAmount : Int;
     educationLevel : Text;
     familyResponsibility : Text;
     gender : ?Text;
+    goal : Text;
     id : UserId__158757552;
     isPremium : Bool;
-    monthlyExpenses : Float;
-    monthlyIncome : Float;
+    monthlyExpenses : Int;
+    monthlyIncome : Int;
     name : Text;
-    primaryGoal : Text;
     principal : Principal;
     riskLevel : Text;
-    skills : [Text]
+    skills : Text
   };
 type UserRole__1073662873 = {#admin; #guest; #user};
-actor {
+actor ({
+  stable accessControlState :
+    {
+      var adminAssigned : Bool;
+      userRoles : Map__605269027<Principal, UserRole__1073662873>
+    };
+  in aiReports : Map__605269027<Text, AIReport__1039556446>;
+  in dailyTasks : List__415060402<DailyTask__20961095>;
+  in expenses : List__415060402<Expense__255157979>;
+  in popularBusinessIdeas : List__415060402<Text>;
+  in popularCareers : List__415060402<Text>;
+  in profiles : Map__605269027<Principal, OldUserProfile__416069324>;
+  in savingsPlans : Map__605269027<Text, SavingsPlan__36630548>;
+  stable var stripeConfig : ?StripeConfiguration__87721349;
+  in subscriptions : Map__605269027<Text, PremiumSubscription__542812497>
+}, {
   stable accessControlState :
     {
       var adminAssigned : Bool;
@@ -135,4 +180,4 @@ actor {
       var root : Node__46230540<Text, PremiumSubscription__542812497>;
       var size : Nat__490723111
     }
-};
+});

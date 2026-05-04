@@ -35,7 +35,7 @@ mixin (
       case (?existing) { existing };
       case null {
         let (income, expenses, debt, savings) = switch (profiles.get(caller)) {
-          case (?p) { (p.monthlyIncome, p.monthlyExpenses, p.debtAmount, p.currentSavings) };
+          case (?p) { (p.monthlyIncome.toFloat(), p.monthlyExpenses.toFloat(), p.debtAmount.toFloat(), p.currentSavings.toFloat()) };
           case null { (0.0, 0.0, 0.0, 0.0) };
         };
         let plan = SavingsLib.generate(income, expenses, debt, savings);

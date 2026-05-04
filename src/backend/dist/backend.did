@@ -22,21 +22,21 @@ type UserProfile =
    careerInterest: text;
    city: text;
    createdAt: Timestamp;
-   currentSavings: float64;
-   currentStudy: text;
-   debtAmount: float64;
+   currentSavings: int;
+   currentStatus: text;
+   debtAmount: int;
    educationLevel: text;
    familyResponsibility: text;
    gender: opt text;
+   goal: text;
    id: UserId;
    isPremium: bool;
-   monthlyExpenses: float64;
-   monthlyIncome: float64;
+   monthlyExpenses: int;
+   monthlyIncome: int;
    name: text;
-   primaryGoal: text;
    "principal": principal;
    riskLevel: text;
-   skills: vec text;
+   skills: text;
  };
 type UserId = text;
 type TransformationOutput = 

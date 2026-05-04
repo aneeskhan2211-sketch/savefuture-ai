@@ -93,23 +93,23 @@ export interface UserProfile {
     id: UserId;
     age: bigint;
     principal: Principal;
-    primaryGoal: string;
-    debtAmount: number;
+    debtAmount: bigint;
     familyResponsibility: string;
     isPremium: boolean;
     city: string;
+    goal: string;
     name: string;
     createdAt: Timestamp;
     gender?: string;
     careerInterest: string;
     businessInterest: string;
-    currentSavings: number;
-    currentStudy: string;
-    skills: Array<string>;
+    currentSavings: bigint;
+    skills: string;
     educationLevel: string;
     riskLevel: string;
-    monthlyExpenses: number;
-    monthlyIncome: number;
+    currentStatus: string;
+    monthlyExpenses: bigint;
+    monthlyIncome: bigint;
 }
 export interface DailyTask {
     id: UserId;

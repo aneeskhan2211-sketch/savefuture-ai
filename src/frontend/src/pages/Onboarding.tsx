@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/select";
 import type { GoalType, RiskLevel, UserProfile } from "@/types";
 import { useActor, useInternetIdentity } from "@caffeineai/core-infrastructure";
+import { Principal } from "@icp-sdk/core/principal";
 import { useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
 import {
@@ -31,7 +32,7 @@ import { toast } from "sonner";
 interface FormData {
   name: string;
   age: number;
-  gender: [] | [string];
+  gender?: string;
   city: string;
   educationLevel: string;
   currentStatus: string;
@@ -147,7 +148,7 @@ const GOAL_OPTIONS: {
 const DEFAULT_FORM: FormData = {
   name: "",
   age: 22,
-  gender: [],
+  gender: undefined,
   city: "",
   educationLevel: "",
   currentStatus: "",
@@ -432,8 +433,8 @@ function Step1({
         </Field>
         <Field label="Gender (optional)">
           <Select
-            value={form.gender.length ? form.gender[0] : ""}
-            onValueChange={(v) => set("gender", v ? [v] : [])}
+            value={form.gender ?? ""}
+            onValueChange={(v) => set("gender", v || undefined)}
           >
             <SelectTrigger data-ocid="onboarding.gender_select">
               <SelectValue placeholder="Select" />
@@ -744,37 +745,48 @@ export default function Onboarding() {
       setErrors(errs);
       return;
     }
-    if (!actor) return;
+    if (!actor) {
+      toast.error("Not connected. Please refresh and try again.");
+      return;
+    }
     setLoading(true);
     try {
-      const profile: UserProfile = {
+      const profile = {
+        id: "",
+        principal: Principal.fromText("aaaaa-aa"),
         name: form.name,
-        age: form.age,
+        age: BigInt(form.age || 0),
         gender: form.gender,
         city: form.city,
         educationLevel: form.educationLevel,
         currentStatus: form.currentStatus,
-        monthlyIncome: form.monthlyIncome,
-        monthlyExpenses: form.monthlyExpenses,
+        monthlyIncome: BigInt(form.monthlyIncome),
+        monthlyExpenses: BigInt(form.monthlyExpenses),
         familyResponsibility: form.familyResponsibility,
-        currentSavings: form.currentSavings,
-        debtAmount: form.debtAmount,
+        currentSavings: BigInt(form.currentSavings),
+        debtAmount: BigInt(form.debtAmount),
         careerInterest: form.careerInterest,
-        skills: form.skills,
+        skills: Array.isArray(form.skills)
+          ? (form.skills as string[]).join(", ")
+          : form.skills,
         businessInterest: form.businessInterest,
         riskLevel: form.riskLevel,
         goal: form.goal,
+        isPremium: false,
+        createdAt: BigInt(Date.now()),
       };
-      await (
-        actor as unknown as {
-          saveCallerUserProfile: (p: UserProfile) => Promise<void>;
-        }
-      ).saveCallerUserProfile(profile);
+      await actor.saveCallerUserProfile(profile);
       await qc.invalidateQueries({ queryKey: ["profile"] });
       toast.success("Profile saved! Your personalised plan is ready. 🎉");
       navigate({ to: "/dashboard" });
-    } catch {
-      toast.error("Failed to save profile. Please try again.");
+    } catch (err) {
+      console.error("saveCallerUserProfile failed:", err);
+      const msg = err instanceof Error ? err.message : String(err);
+      toast.error(
+        msg.includes("reject")
+          ? "Could not save profile — please check your connection and try again."
+          : "Failed to save profile. Please try again.",
+      );
     } finally {
       setLoading(false);
     }

@@ -175,23 +175,23 @@ export interface UserProfile {
     id: UserId;
     age: bigint;
     principal: Principal;
-    primaryGoal: string;
-    debtAmount: number;
+    debtAmount: bigint;
     familyResponsibility: string;
     isPremium: boolean;
     city: string;
+    goal: string;
     name: string;
     createdAt: Timestamp;
     gender?: string;
     careerInterest: string;
     businessInterest: string;
-    currentSavings: number;
-    currentStudy: string;
-    skills: Array<string>;
+    currentSavings: bigint;
+    skills: string;
     educationLevel: string;
     riskLevel: string;
-    monthlyExpenses: number;
-    monthlyIncome: number;
+    currentStatus: string;
+    monthlyExpenses: bigint;
+    monthlyIncome: bigint;
 }
 export interface DailyTask {
     id: UserId;
@@ -671,64 +671,64 @@ function from_candid_record_n6(_uploadFile: (file: ExternalBlob) => Promise<Uint
     id: _UserId;
     age: bigint;
     principal: Principal;
-    primaryGoal: string;
-    debtAmount: number;
+    debtAmount: bigint;
     familyResponsibility: string;
     isPremium: boolean;
     city: string;
+    goal: string;
     name: string;
     createdAt: _Timestamp;
     gender: [] | [string];
     careerInterest: string;
     businessInterest: string;
-    currentSavings: number;
-    currentStudy: string;
-    skills: Array<string>;
+    currentSavings: bigint;
+    skills: string;
     educationLevel: string;
     riskLevel: string;
-    monthlyExpenses: number;
-    monthlyIncome: number;
+    currentStatus: string;
+    monthlyExpenses: bigint;
+    monthlyIncome: bigint;
 }): {
     id: UserId;
     age: bigint;
     principal: Principal;
-    primaryGoal: string;
-    debtAmount: number;
+    debtAmount: bigint;
     familyResponsibility: string;
     isPremium: boolean;
     city: string;
+    goal: string;
     name: string;
     createdAt: Timestamp;
     gender?: string;
     careerInterest: string;
     businessInterest: string;
-    currentSavings: number;
-    currentStudy: string;
-    skills: Array<string>;
+    currentSavings: bigint;
+    skills: string;
     educationLevel: string;
     riskLevel: string;
-    monthlyExpenses: number;
-    monthlyIncome: number;
+    currentStatus: string;
+    monthlyExpenses: bigint;
+    monthlyIncome: bigint;
 } {
     return {
         id: value.id,
         age: value.age,
         principal: value.principal,
-        primaryGoal: value.primaryGoal,
         debtAmount: value.debtAmount,
         familyResponsibility: value.familyResponsibility,
         isPremium: value.isPremium,
         city: value.city,
+        goal: value.goal,
         name: value.name,
         createdAt: value.createdAt,
         gender: record_opt_to_undefined(from_candid_opt_n7(_uploadFile, _downloadFile, value.gender)),
         careerInterest: value.careerInterest,
         businessInterest: value.businessInterest,
         currentSavings: value.currentSavings,
-        currentStudy: value.currentStudy,
         skills: value.skills,
         educationLevel: value.educationLevel,
         riskLevel: value.riskLevel,
+        currentStatus: value.currentStatus,
         monthlyExpenses: value.monthlyExpenses,
         monthlyIncome: value.monthlyIncome
     };
@@ -781,64 +781,64 @@ function to_candid_record_n4(_uploadFile: (file: ExternalBlob) => Promise<Uint8A
     id: UserId;
     age: bigint;
     principal: Principal;
-    primaryGoal: string;
-    debtAmount: number;
+    debtAmount: bigint;
     familyResponsibility: string;
     isPremium: boolean;
     city: string;
+    goal: string;
     name: string;
     createdAt: Timestamp;
     gender?: string;
     careerInterest: string;
     businessInterest: string;
-    currentSavings: number;
-    currentStudy: string;
-    skills: Array<string>;
+    currentSavings: bigint;
+    skills: string;
     educationLevel: string;
     riskLevel: string;
-    monthlyExpenses: number;
-    monthlyIncome: number;
+    currentStatus: string;
+    monthlyExpenses: bigint;
+    monthlyIncome: bigint;
 }): {
     id: _UserId;
     age: bigint;
     principal: Principal;
-    primaryGoal: string;
-    debtAmount: number;
+    debtAmount: bigint;
     familyResponsibility: string;
     isPremium: boolean;
     city: string;
+    goal: string;
     name: string;
     createdAt: _Timestamp;
     gender: [] | [string];
     careerInterest: string;
     businessInterest: string;
-    currentSavings: number;
-    currentStudy: string;
-    skills: Array<string>;
+    currentSavings: bigint;
+    skills: string;
     educationLevel: string;
     riskLevel: string;
-    monthlyExpenses: number;
-    monthlyIncome: number;
+    currentStatus: string;
+    monthlyExpenses: bigint;
+    monthlyIncome: bigint;
 } {
     return {
         id: value.id,
         age: value.age,
         principal: value.principal,
-        primaryGoal: value.primaryGoal,
         debtAmount: value.debtAmount,
         familyResponsibility: value.familyResponsibility,
         isPremium: value.isPremium,
         city: value.city,
+        goal: value.goal,
         name: value.name,
         createdAt: value.createdAt,
         gender: value.gender ? candid_some(value.gender) : candid_none(),
         careerInterest: value.careerInterest,
         businessInterest: value.businessInterest,
         currentSavings: value.currentSavings,
-        currentStudy: value.currentStudy,
         skills: value.skills,
         educationLevel: value.educationLevel,
         riskLevel: value.riskLevel,
+        currentStatus: value.currentStatus,
         monthlyExpenses: value.monthlyExpenses,
         monthlyIncome: value.monthlyIncome
     };

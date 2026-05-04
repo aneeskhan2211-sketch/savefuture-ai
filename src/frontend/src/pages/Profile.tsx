@@ -95,9 +95,11 @@ export default function Profile() {
     if (!actor) return;
     try {
       const blank: UserProfile = {
+        id: "",
+        principal: {} as UserProfile["principal"],
         name: "",
-        age: 0,
-        gender: [],
+        age: BigInt(0),
+        gender: undefined,
         city: "",
         educationLevel: "",
         currentStatus: "",
@@ -111,6 +113,8 @@ export default function Profile() {
         businessInterest: "",
         riskLevel: "low",
         goal: "save",
+        isPremium: false,
+        createdAt: BigInt(0),
       };
       await (
         actor as unknown as {
@@ -575,16 +579,21 @@ function EditForm({
             <Input
               id="age"
               type="number"
-              value={formData.age}
-              onChange={(e) => updateField("age", Number(e.target.value))}
+              value={Number(formData.age)}
+              onChange={(e) =>
+                updateField(
+                  "age",
+                  BigInt(Math.max(0, Number(e.target.value) || 0)),
+                )
+              }
               data-ocid="profile.age.input"
             />
           </div>
           <div>
             <Label htmlFor="gender">Gender (optional)</Label>
             <Select
-              value={formData.gender[0] ?? ""}
-              onValueChange={(v) => updateField("gender", v ? [v] : [])}
+              value={formData.gender ?? ""}
+              onValueChange={(v) => updateField("gender", v || undefined)}
             >
               <SelectTrigger data-ocid="profile.gender.select">
                 <SelectValue placeholder="Select" />

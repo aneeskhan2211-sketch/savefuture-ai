@@ -19,7 +19,9 @@ import TaskApi "mixins/task-api";
 import AdminApi "mixins/admin-api";
 import SubscriptionApi "mixins/subscription-api";
 import Runtime "mo:core/Runtime";
+import Migration "migration";
 
+(with migration = Migration.run)
 actor {
   // Authorization
   let accessControlState = AccessControl.initState();
